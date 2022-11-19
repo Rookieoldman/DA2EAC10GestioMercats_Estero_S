@@ -4,6 +4,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import java.awt.*;
 
 /**
  *
@@ -42,6 +43,25 @@ public class MercatForm {
             quan l'usuari ho fa amb el control "X" de la finestra. Per fer tot això, heu de cridar al mètode showFinestra() d'aquesta
             classe.       
         */
+        frame = new JFrame("Formulari Mercat");
+        frame.setLayout(new GridLayout(0,1));
+        lNom = new JLabel("Nom:");
+        tNom = new JTextField();
+        lAdreca= new JLabel("Adreca:");
+        tAdreca = new JTextField();
+        desar= new JButton("Desar");
+        sortir = new JButton("Sortir");
+
+        frame.add(lNom);
+        frame.add(tNom);
+        frame.add(lAdreca);
+        frame.add(tAdreca);
+        frame.add(desar);
+        frame.add(sortir);
+
+        showFinestra();
+
+
 
     }
     

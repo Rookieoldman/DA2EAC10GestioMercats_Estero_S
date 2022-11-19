@@ -2,8 +2,10 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JOptionPane;
+import javax.swing.*;
+
 import model.Mercat;
+import org.w3c.dom.events.EventListener;
 import persistencia.GestorPersistencia;
 import vista.MenuPrincipal;
 
@@ -29,7 +31,10 @@ public class ControladorPrincipal implements ActionListener {
         A cada botó del menú, s'afegeix aquest mateix objecte (ControladorPrincipal) com a listener
         
          */
-
+        menuPrincipal = new MenuPrincipal();
+        for (JButton boto : menuPrincipal.getMenuButtons()){
+            boto.addActionListener(this);
+        }
     }
 
     @Override
@@ -41,6 +46,16 @@ public class ControladorPrincipal implements ActionListener {
         correspon amb la posició que el botó ocupa a l'array de botons de menuPrincipal.
         
          */
+        JButton botoPitjat = (JButton) e.getSource();
+        JButton[] botons = menuPrincipal.getMenuButtons();
+        for (int i = 0; i < botons.length; i++) {
+
+            if (botoPitjat==botons[i]){
+                seleccionarOpcio(i);
+            }
+        }
+
+
 
     }
 

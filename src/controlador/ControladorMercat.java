@@ -2,12 +2,15 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JOptionPane;
+import java.util.Objects;
+import javax.swing.*;
+
 import model.Mercat;
 import persistencia.GestorPersistencia;
 import persistencia.GestorXML;
 import principal.GestorMercatsException;
 import vista.MenuMercat;
+import vista.MenuPrincipal;
 import vista.MercatForm;
 import vista.MercatLlista;
 
@@ -31,6 +34,8 @@ public class ControladorMercat implements ActionListener {
         Es crida a afegirListenersMenu
         
          */
+        menuMercat = new MenuMercat();
+        afegirListenersMenu();
 
     }
 
@@ -44,6 +49,12 @@ public class ControladorMercat implements ActionListener {
         
          */
 
+        JButton[] botons = menuMercat.getMenuButtons();
+        for (JButton boto : botons){
+            boto.addActionListener(this);
+        }
+
+
     }
 
     //S'AFEGEIX EL CONTROLADOR COM A LISTENER DELS BOTONS DESAR i SORTIR DEL FORMULARI
@@ -54,6 +65,14 @@ public class ControladorMercat implements ActionListener {
         A cada botó del formulari del mercat, s'afegeix aquest mateix objecte (ControladorMercat) com a listener
         
          */
+        JButton sortir = mercatForm.getSortir();
+        JButton desar = mercatForm.getDesar();
+        if (sortir.equals(mercatForm.getSortir())){
+            sortir.addActionListener(this);
+        }
+        if (desar.equals(mercatForm.getDesar())){
+            desar.addActionListener(this);
+        }
         
     }
 
@@ -64,6 +83,10 @@ public class ControladorMercat implements ActionListener {
         
         Al botó de sortir de la llista de mercats, s'afegeix aquest mateix objecte (ControladorMercat) com a listener
          */
+        JButton sortir = mercatLlista.getSortir();
+        if (sortir.equals(mercatLlista.getSortir())){
+            sortir.addActionListener(this);
+        }
 
     }
 
@@ -107,6 +130,40 @@ public class ControladorMercat implements ActionListener {
          
          */
 
+        JButton botoPitjat = (JButton) e.getSource();
+        JButton[] botons = menuMercat.getMenuButtons();
+
+        for (int i = 0; i < botons.length; i++) {
+            if (botoPitjat==botons[i]){
+                seleccionarOpcio(i);
+                menuMercat.getFrame().setVisible(false);
+            }
+        }
+
+        if (mercatForm != null && e.getSource().equals(mercatForm.getSortir()) ) {
+            mercatForm.getFrame().setVisible(false);
+            menuMercat.getFrame().setVisible(true);
+        }
+
+        if (mercatForm != null && e.getSource().equals(mercatForm.getDesar())){
+            String nom= mercatForm.gettNom().getText();
+            String adreca = mercatForm.gettAdreca().getText();
+            Mercat nouMercat = new Mercat(nom,adreca);
+            Mercat[] mercats = ControladorPrincipal.getMercats();
+            int posicio = ControladorPrincipal.getpMercats();
+                mercats[posicio]= nouMercat;
+                ControladorPrincipal.setpMercats();
+                mercatForm.getFrame().setVisible(false);
+                menuMercat.getFrame().setVisible(true);
+        }
+
+        if (mercatLlista != null && e.getSource().equals(mercatLlista.getSortir())){
+            mercatLlista.getFrame().setVisible(false);
+            menuMercat.getFrame().setVisible(true);
+        }
+        if (e.getSource().equals(menuMercat.getFrame().getContentPane())){
+            menuMercat.getFrame().setVisible(true);
+        }
     }
 
     private void seleccionarOpcio(Integer opcio) {
@@ -130,10 +187,12 @@ public class ControladorMercat implements ActionListener {
                 break;
 
             case 2: //seleccionar
-                menuMercat.getFrame().setVisible(true);
+
                 if (ControladorPrincipal.getMercats()[0] != null) {
                     seleccionarMercat();
+                    afegirListenersForm();
                 } else {
+                    menuMercat.getFrame().setVisible(true);
                     JOptionPane.showMessageDialog(menuMercat.getFrame(), "Abans s'ha de crear al menys un mercat");
                 }
                 break;
@@ -201,10 +260,6 @@ public class ControladorMercat implements ActionListener {
                 NOTA: Si es produeix alguna excepció de tipus GestorMercatsException, s'ha de capturar
                 i mostrar el missatge que retorna l'excepció (getMessage()) mitjançant JOptionPane.showMessageDialog.
                  */
-
-
-                break;
-
         }
 
     }
@@ -219,6 +274,9 @@ public class ControladorMercat implements ActionListener {
 
             if (mercat != null) {
                 codis[i] = mercat.getCodi();
+                menuMercat.getFrame().setVisible(true);
+
+
             }
 
             i++;
@@ -230,6 +288,7 @@ public class ControladorMercat implements ActionListener {
 
         if (codi != JOptionPane.CLOSED_OPTION) {
             ControladorPrincipal.setMercatActual(ControladorPrincipal.getMercats()[codi]);
+            menuMercat.getFrame().setVisible(true);
         }
 
     }

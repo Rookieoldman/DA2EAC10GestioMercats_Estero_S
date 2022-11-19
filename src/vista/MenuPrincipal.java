@@ -1,7 +1,9 @@
 package vista;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  *
@@ -16,7 +18,7 @@ public class MenuPrincipal {
     private final int AMPLADA = 800;
     private final int ALCADA = 600;
 
-    public MenuPrincipal() {
+    public MenuPrincipal(){
         
         /*
         TODO
@@ -36,8 +38,26 @@ public class MenuPrincipal {
             quan l'usuari ho fa amb el control "X" de la finestra. Per fer tot això, heu de cridar al mètode showFinestra() d'aquesta
             classe.
         
-        */ 
-         
+        */
+        frame = new JFrame("Menu Principal");
+        frame.setLayout(new GridLayout(3,1));
+
+        JButton boto1 = new JButton("0. Sortir");
+        JButton boto2 = new JButton("1. Menú Mercat");
+        JButton boto3 = new JButton("2. Menú Punts d'informació");
+
+        menuButtons[0]= boto1;
+        menuButtons[1]= boto2;
+        menuButtons[2]= boto3;
+
+
+        for (int i = 0; i < menuButtons.length; i++) {
+            frame.add(menuButtons[i]);
+
+
+        }
+        showFinestra();
+
     }
     
     private void showFinestra(){
@@ -62,4 +82,5 @@ public class MenuPrincipal {
     public void setMenuButtons(JButton[] menuButtons) {
         this.menuButtons = menuButtons;
     }
+
 }

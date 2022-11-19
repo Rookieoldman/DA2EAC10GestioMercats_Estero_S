@@ -2,6 +2,7 @@ package vista;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import java.awt.*;
 
 /**
  *
@@ -38,6 +39,29 @@ public class MenuMercat {
             quan l'usuari ho fa amb el control "X" de la finestra. Per fer tot això, heu de cridar al mètode showFinestra() d'aquesta
             classe.        
          */
+        frame = new JFrame("Menu Mercats");
+        frame.setLayout(new GridLayout(0,1));
+
+        JButton boto1 = new JButton("0. Sortir");
+        JButton boto2 = new JButton("1. Alta Mercat");
+        JButton boto3 = new JButton("2. Seleccionar Mercat");
+        JButton boto4 = new JButton("3. Llistar Mercats");
+        JButton boto5 = new JButton("4. Carregar Mercat");
+        JButton boto6 = new JButton("5. Desar Mercat");
+
+        menuButtons[0]=boto1;
+        menuButtons[1]=boto2;
+        menuButtons[2]=boto3;
+        menuButtons[3]=boto4;
+        menuButtons[4]=boto5;
+        menuButtons[5]=boto6;
+
+
+
+        for (int i = 0; i < menuButtons.length; i++) {
+            frame.add(menuButtons[i]);
+        }
+        showFinestra();
        
     }
     
